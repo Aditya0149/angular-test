@@ -1,4 +1,19 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<select name="" (click)="selectChange(address.value)" #address >
-  <option value="let address of addresses;">{{address}}</option>
-</select>
+  <select name="" (click)="selectChange('')" #add style="width:200px;" >
+   </select>
+  <div class="select-ext" *ngIf="showInput">
+    <input class="search_box" type="text" (keyup)="inputChange(search.value)" #search ><br/>
+    <div *ngFor="let address of addresses;" (click)="optionClicked(address)" >{{address.address}}</div>
+    <button (click)="showAddressModal=true">Add</button>
+  </div>
+  <div [hidden]="!showAddressModal" class="address_modal card">
+    <div class="form-group">
+      <label>Enter address</label>
+      <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #newAddress>
+    </div>
+    <button (click)="addAddress(newAddress.value)" class="primary-btn btn">Add Address</button>
+  </div>
+<app-map *ngIf="showMap" [address]="mapAddress"></app-map>
+<div class="overlay" *ngIf="showAddressModal">
+
+</div>
